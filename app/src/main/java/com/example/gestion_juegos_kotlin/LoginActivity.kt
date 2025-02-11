@@ -38,5 +38,20 @@ class LoginActivity : AppCompatActivity() {
 
             binding.passwordEditText.setSelection(selectStart, selectEnd)
         }
+
+        binding.registerBtn.setOnClickListener {
+            validatePass()
+            // TODO llamar al service para registrar un usuario
+        }
+
+        binding.loginBtn.setOnClickListener {
+            validatePass()
+            // TODO llamar al service para obtener token
+        }
+    }
+
+    private fun validatePass() {
+        if (binding.passwordEditText.text.length < 8)
+            binding.passwordEditText.error = "La contraseña debe tener al menos 8 caracteres"
     }
 }
