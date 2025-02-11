@@ -3,4 +3,6 @@
     <string name="password">Contraseña</string>
     <string name="user_name">Nombre de usuario</string>
     <string name="login_title">Inicio de sesión</string>
+    <string name="register">Registrarse</string>
+    <string name="login">Iniciar sesión</string>
 </resources>
