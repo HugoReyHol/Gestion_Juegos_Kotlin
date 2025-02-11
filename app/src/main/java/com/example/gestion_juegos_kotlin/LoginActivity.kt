@@ -10,7 +10,6 @@ import com.example.gestion_juegos_kotlin.databinding.ActivityLoginBinding
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var passIsVisible: Boolean = false
-    lateinit var passTypeface: Typeface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,23 +21,22 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initializeComponents() {
-        passTypeface = binding.passwordEditText.typeface
-
         binding.visibilityBtn.setOnClickListener {
+            val selectStart = binding.passwordEditText.selectionStart
+            val selectEnd = binding.passwordEditText.selectionEnd
             passIsVisible = !passIsVisible;
 
             if (passIsVisible) {
                 binding.visibilityBtn.setImageResource(R.drawable.ic_launcher_foreground) // TODO cambiar por ojo tachado cuando deje descargarlo
-                binding.passwordEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                binding.passwordEditText.transformationMethod = null
 
             } else {
                 binding.visibilityBtn.setImageResource(R.drawable.baseline_visibility_24)
-                binding.passwordEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.passwordEditText.transformationMethod = android.text.method.PasswordTransformationMethod.getInstance()
 
             }
 
-            binding.passwordEditText.typeface = passTypeface
-            binding.passwordEditText.setSelection(binding.passwordEditText.text.length)
+            binding.passwordEditText.setSelection(selectStart, selectEnd)
         }
     }
 }
