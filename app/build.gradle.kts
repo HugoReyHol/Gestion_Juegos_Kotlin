@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.gestion_juegos_kotlin"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.gestion_juegos_kotlin"

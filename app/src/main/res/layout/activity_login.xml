@@ -47,6 +47,7 @@
         android:id="@+id/visibilityBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:background="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/passwordEditText"
         app:layout_constraintEnd_toEndOf="@+id/usernameEditText"
         app:layout_constraintStart_toEndOf="@+id/passwordEditText"
