@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
                 ),
                 this
             )
+            changeScreen()
         }
 
         binding.loginBtn.setOnClickListener {
@@ -62,6 +63,7 @@ class LoginActivity : AppCompatActivity() {
                 ),
                 this
             )
+            changeScreen()
         }
     }
 
@@ -80,5 +82,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         return true
+    }
+
+    private fun changeScreen() {
+        if (UserService.user != null) {
+            // TODO Iniciar sesión
+
+        }
     }
 }

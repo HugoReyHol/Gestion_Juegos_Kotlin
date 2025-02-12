@@ -8,7 +8,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 object GameService {
-    lateinit var _games: List<Game>
+    private lateinit var _games: List<Game>
 
     val games: List<Game>
         get() {

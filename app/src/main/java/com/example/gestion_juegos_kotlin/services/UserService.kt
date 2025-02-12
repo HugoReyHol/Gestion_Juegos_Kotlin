@@ -10,7 +10,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 object UserService {
-    lateinit var user: User
+    private var _user: User? = null
+
+    val user: User?
+        get() {
+            return _user
+        }
+
 
      fun login(request: UserRequest, context: Context) {
         Log.i("LogIn", request.password)
@@ -26,13 +32,13 @@ object UserService {
                 }
 
                 else if (response.isSuccessful) {
-                    user = response.body()!!
+                    _user = response.body()!!
 
                     // TODO lógica para iniciar sesión
-                    Log.i("APILogin", "${user.idUser}")
-                    Log.i("APILogin", user.username)
-                    Log.i("APILogin", user.password)
-                    Log.i("APILogin", user.token)
+                    Log.i("APILogin", "${_user!!.idUser}")
+                    Log.i("APILogin", _user!!.username)
+                    Log.i("APILogin", _user!!.password)
+                    Log.i("APILogin", _user!!.token)
                 }
             }
 
@@ -51,13 +57,13 @@ object UserService {
                 }
 
                 else if (response.isSuccessful) {
-                    user = response.body()!!
+                    _user = response.body()!!
 
                     // TODO lógica para iniciar sesión
-                    Log.i("APILogin", "${user.idUser}")
-                    Log.i("APILogin", user.username)
-                    Log.i("APILogin", user.password)
-                    Log.i("APILogin", user.token)
+                    Log.i("APILogin", "${_user!!.idUser}")
+                    Log.i("APILogin", _user!!.username)
+                    Log.i("APILogin", _user!!.password)
+                    Log.i("APILogin", _user!!.token)
                 }
             }
 

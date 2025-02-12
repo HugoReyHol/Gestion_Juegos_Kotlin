@@ -10,7 +10,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 object UserGameService {
-    lateinit var _userGames: List<UserGame>
+    private lateinit var _userGames: List<UserGame>
 
     val userGames: List<UserGame>
         get() {
@@ -22,7 +22,9 @@ object UserGameService {
         }
 
         private fun getUserGames() {
-            RetrofitClient.instance.getUserGames(UserService.user.token).enqueue(object : Callback<List<UserGameResponse>> {
+            val token = UserService.user!!.token
+
+            RetrofitClient.instance.getUserGames(token).enqueue(object : Callback<List<UserGameResponse>> {
                 override fun onResponse(call: Call<List<UserGameResponse>>,response: Response<List<UserGameResponse>>) {
                     if (response.isSuccessful) {
                         _userGames = response.body()!!.map { UserGame.fromResponse(it) }
@@ -39,7 +41,7 @@ object UserGameService {
         }
 
     fun insertUserGame(userGame: UserGame) {
-        val token = UserService.user.token
+        val token = UserService.user!!.token
         val body = UserGameInsert.fromUserGame(userGame)
 
         RetrofitClient.instance.insertUserGame(token, body).enqueue(object : Callback<Void> {
@@ -59,7 +61,7 @@ object UserGameService {
     }
 
     fun updateUserGame(userGame: UserGame, update: UserGameUpdate) {
-        val token = UserService.user.token
+        val token = UserService.user!!.token
         val id = userGame.idGame
 
         RetrofitClient.instance.updateUserGame(id, token, update).enqueue(object : Callback<Void> {
@@ -79,7 +81,7 @@ object UserGameService {
     }
 
     fun deleteUserGame(userGame: UserGame) {
-        val token = UserService.user.token
+        val token = UserService.user!!.token
         val id = userGame.idGame
 
         RetrofitClient.instance.deleteUserGame(id, token).enqueue(object : Callback<Void> {
