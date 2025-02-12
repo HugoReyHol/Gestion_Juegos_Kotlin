@@ -37,7 +37,7 @@ object UserService {
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.e("APILoginError", t.message.toString())
+                Log.e("APILogin", t.message.toString())
                 Toast.makeText(context, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
         })

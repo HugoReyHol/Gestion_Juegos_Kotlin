@@ -15,6 +15,6 @@ interface ApiService {
     @POST("/user/insert")
     fun registerUser(@Body request: UserRequest): Call<User>
 
-    @GET("/")
+    @GET("/game")
     fun getGames(): Call<List<GameResponse>>
 }
