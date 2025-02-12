@@ -1,8 +1,6 @@
 package com.example.gestion_juegos_kotlin
 
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.InputType
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gestion_juegos_kotlin.databinding.ActivityLoginBinding
@@ -27,11 +25,11 @@ class LoginActivity : AppCompatActivity() {
             passIsVisible = !passIsVisible;
 
             if (passIsVisible) {
-                binding.visibilityBtn.setImageResource(R.drawable.ic_launcher_foreground) // TODO cambiar por ojo tachado cuando deje descargarlo
+                binding.visibilityBtn.setImageResource(R.drawable.visibility_off)
                 binding.passwordEditText.transformationMethod = null
 
             } else {
-                binding.visibilityBtn.setImageResource(R.drawable.baseline_visibility_24)
+                binding.visibilityBtn.setImageResource(R.drawable.visibility)
                 binding.passwordEditText.transformationMethod = android.text.method.PasswordTransformationMethod.getInstance()
 
             }

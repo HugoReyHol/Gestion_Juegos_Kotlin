@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="@+id/usernameEditText"
         app:layout_constraintStart_toEndOf="@+id/passwordEditText"
         app:layout_constraintTop_toTopOf="@+id/passwordEditText"
-        app:srcCompat="@drawable/baseline_visibility_24" />
+        app:srcCompat="@drawable/visibility" />
 
     <Button
         android:id="@+id/registerBtn"
