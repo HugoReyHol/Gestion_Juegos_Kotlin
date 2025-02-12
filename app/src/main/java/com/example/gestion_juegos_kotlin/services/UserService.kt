@@ -1,8 +1,10 @@
 package com.example.gestion_juegos_kotlin.services
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import com.example.gestion_juegos_kotlin.MainActivity
 import com.example.gestion_juegos_kotlin.models.User
 import com.example.gestion_juegos_kotlin.models.UserRequest
 import retrofit2.Call
@@ -34,11 +36,9 @@ object UserService {
                 else if (response.isSuccessful) {
                     _user = response.body()!!
 
-                    // TODO lógica para iniciar sesión
-                    Log.i("APILogin", "${_user!!.idUser}")
-                    Log.i("APILogin", _user!!.username)
-                    Log.i("APILogin", _user!!.password)
-                    Log.i("APILogin", _user!!.token)
+                    context.startActivity(
+                        Intent(context, MainActivity::class.java)
+                    )
                 }
             }
 
@@ -59,11 +59,9 @@ object UserService {
                 else if (response.isSuccessful) {
                     _user = response.body()!!
 
-                    // TODO lógica para iniciar sesión
-                    Log.i("APILogin", "${_user!!.idUser}")
-                    Log.i("APILogin", _user!!.username)
-                    Log.i("APILogin", _user!!.password)
-                    Log.i("APILogin", _user!!.token)
+                    context.startActivity(
+                        Intent(context, MainActivity::class.java)
+                    )
                 }
             }
 

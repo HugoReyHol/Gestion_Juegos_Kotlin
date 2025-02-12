@@ -1,5 +1,6 @@
 package com.example.gestion_juegos_kotlin
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
@@ -51,7 +52,6 @@ class LoginActivity : AppCompatActivity() {
                 ),
                 this
             )
-            changeScreen()
         }
 
         binding.loginBtn.setOnClickListener {
@@ -63,7 +63,6 @@ class LoginActivity : AppCompatActivity() {
                 ),
                 this
             )
-            changeScreen()
         }
     }
 
@@ -82,12 +81,5 @@ class LoginActivity : AppCompatActivity() {
         }
 
         return true
-    }
-
-    private fun changeScreen() {
-        if (UserService.user != null) {
-            // TODO Iniciar sesión
-
-        }
     }
 }
