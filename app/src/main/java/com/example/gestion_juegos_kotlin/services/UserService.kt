@@ -20,7 +20,7 @@ object UserService {
         }
 
 
-     fun login(request: UserRequest, context: Context) {
+    fun login(request: UserRequest, context: Context) {
         Log.i("LogIn", request.password)
 
         RetrofitClient.instance.loginUser(request).enqueue( object : Callback<User> {
