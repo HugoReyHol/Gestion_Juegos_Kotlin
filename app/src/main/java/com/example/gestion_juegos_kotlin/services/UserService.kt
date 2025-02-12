@@ -29,10 +29,10 @@ object UserService {
                     user = response.body()!!
 
                     // TODO lógica para iniciar sesión
-                    Log.i("APILogin", "${user?.idUser}")
-                    Log.i("APILogin", "${user?.username}")
-                    Log.i("APILogin", "${user?.password}")
-                    Log.i("APILogin", "${user?.token}")
+                    Log.i("APILogin", "${user.idUser}")
+                    Log.i("APILogin", user.username)
+                    Log.i("APILogin", user.password)
+                    Log.i("APILogin", user.token)
                 }
             }
 
@@ -54,10 +54,10 @@ object UserService {
                     user = response.body()!!
 
                     // TODO lógica para iniciar sesión
-                    Log.i("APILogin", "${user?.idUser}")
-                    Log.i("APILogin", "${user?.username}")
-                    Log.i("APILogin", "${user?.password}")
-                    Log.i("APILogin", "${user?.token}")
+                    Log.i("APILogin", "${user.idUser}")
+                    Log.i("APILogin", user.username)
+                    Log.i("APILogin", user.password)
+                    Log.i("APILogin", user.token)
                 }
             }
 
