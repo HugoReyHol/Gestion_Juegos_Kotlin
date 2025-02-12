@@ -2,18 +2,13 @@ package com.example.gestion_juegos_kotlin
 
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gestion_juegos_kotlin.databinding.ActivityLoginBinding
 import com.example.gestion_juegos_kotlin.models.UserRequest
-import com.example.gestion_juegos_kotlin.models.User
-import com.example.gestion_juegos_kotlin.services.RetrofitClient
+import com.example.gestion_juegos_kotlin.services.UserService
 import com.example.gestion_juegos_kotlin.util.encript
-import retrofit2.Callback
-import retrofit2.Call
-import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -49,12 +44,24 @@ class LoginActivity : AppCompatActivity() {
 
         binding.registerBtn.setOnClickListener {
             if (!validateFields()) return@setOnClickListener
-            register()
+            UserService.register(
+                UserRequest(
+                    username = binding.usernameEditText.text.toString(),
+                    password = binding.passwordEditText.text.toString().encript()
+                ),
+                this
+            )
         }
 
         binding.loginBtn.setOnClickListener {
             if (!validateFields()) return@setOnClickListener
-            login()
+            UserService.login(
+                UserRequest(
+                    username = binding.usernameEditText.text.toString(),
+                    password = binding.passwordEditText.text.toString().encript()
+                ),
+                this
+            )
         }
     }
 
@@ -73,71 +80,5 @@ class LoginActivity : AppCompatActivity() {
         }
 
         return true
-    }
-
-    private fun login() {
-        val request = UserRequest(
-            username = binding.usernameEditText.text.toString(),
-            password = binding.passwordEditText.text.toString().encript()
-        )
-
-        Log.i("LogIn", request.password)
-
-        RetrofitClient.instance.loginUser(request).enqueue( object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                if (response.code() == 401) {
-                    Toast.makeText(applicationContext, "Contraseña incorrecta", Toast.LENGTH_SHORT).show()
-                }
-
-                else if (response.code() == 404) {
-                    Toast.makeText(applicationContext, "El usuario ${request.username} no existe", Toast.LENGTH_SHORT).show()
-                }
-
-                else if (response.isSuccessful) {
-                    val user = response.body()
-
-                    // TODO lógica para iniciar sesión
-                    Log.i("LogIn", "${user?.idUser}")
-                    Log.i("LogIn", "${user?.username}")
-                    Log.i("LogIn", "${user?.password}")
-                    Log.i("LogIn", "${user?.token}")
-                }
-            }
-
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.e("LoginError", t.message.toString())
-                Toast.makeText(applicationContext, "Error de conexión", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun register() {
-        val request = UserRequest(
-            username = binding.usernameEditText.text.toString(),
-            password = binding.passwordEditText.text.toString().encript()
-        )
-
-        RetrofitClient.instance.registerUser(request).enqueue( object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                if (response.code() == 400) {
-                    Toast.makeText(applicationContext, "El usuario ya existe", Toast.LENGTH_SHORT).show()
-                }
-
-                else if (response.isSuccessful) {
-                    val user = response.body()
-
-                    // TODO lógica para iniciar sesión
-                    Log.i("LogIn", "${user?.idUser}")
-                    Log.i("LogIn", "${user?.username}")
-                    Log.i("LogIn", "${user?.password}")
-                    Log.i("LogIn", "${user?.token}")
-                }
-            }
-
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.e("LoginError", t.message.toString())
-                Toast.makeText(applicationContext, "Error de conexión", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 }
