@@ -6,6 +6,8 @@ import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.gestion_juegos_kotlin.databinding.ActivityLoginBinding
 import com.example.gestion_juegos_kotlin.models.UserRequest
 import com.example.gestion_juegos_kotlin.services.UserService
@@ -20,6 +22,11 @@ class LoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         initializeComponents()
     }
