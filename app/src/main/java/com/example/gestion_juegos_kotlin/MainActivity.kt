@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = ""
 
-        val options = UserGame.Companion.GameStates.entries.toTypedArray().toMutableList()
+        val options = UserGame.Companion.GameStates.entries.map { it.string } as MutableList
+        options.add("TODOS")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
         binding.spinner.adapter = adapter
     }

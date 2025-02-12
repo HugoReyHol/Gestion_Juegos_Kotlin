@@ -10,7 +10,13 @@ data class UserGame(
     var gameState: GameStates,
 ) {
     companion object {
-        enum class GameStates {playing, completed, on_hold, dropped, plan_to_play}
+        enum class GameStates(val string: String) {
+            playing("JUGANDO"),
+            completed("COMPLETADO"),
+            on_hold("EN ESPERA"),
+            dropped("ABANDONADO"),
+            plan_to_play("PENDIENTE");
+        }
 
         fun fromResponse(response: UserGameResponse): UserGame {
             val state : GameStates = GameStates.valueOf(response.gameState)
