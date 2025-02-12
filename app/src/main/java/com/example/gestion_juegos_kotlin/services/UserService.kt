@@ -10,6 +10,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 object UserService {
+    lateinit var user: User
+
      fun login(request: UserRequest, context: Context) {
         Log.i("LogIn", request.password)
 
@@ -24,18 +26,18 @@ object UserService {
                 }
 
                 else if (response.isSuccessful) {
-                    val user = response.body()
+                    user = response.body()!!
 
                     // TODO lógica para iniciar sesión
-                    Log.i("LogIn", "${user?.idUser}")
-                    Log.i("LogIn", "${user?.username}")
-                    Log.i("LogIn", "${user?.password}")
-                    Log.i("LogIn", "${user?.token}")
+                    Log.i("APILogin", "${user?.idUser}")
+                    Log.i("APILogin", "${user?.username}")
+                    Log.i("APILogin", "${user?.password}")
+                    Log.i("APILogin", "${user?.token}")
                 }
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.e("LoginError", t.message.toString())
+                Log.e("APILoginError", t.message.toString())
                 Toast.makeText(context, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
         })
@@ -49,18 +51,18 @@ object UserService {
                 }
 
                 else if (response.isSuccessful) {
-                    val user = response.body()
+                    user = response.body()!!
 
                     // TODO lógica para iniciar sesión
-                    Log.i("LogIn", "${user?.idUser}")
-                    Log.i("LogIn", "${user?.username}")
-                    Log.i("LogIn", "${user?.password}")
-                    Log.i("LogIn", "${user?.token}")
+                    Log.i("APILogin", "${user?.idUser}")
+                    Log.i("APILogin", "${user?.username}")
+                    Log.i("APILogin", "${user?.password}")
+                    Log.i("APILogin", "${user?.token}")
                 }
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.e("LoginError", t.message.toString())
+                Log.e("APILoginError", t.message.toString())
                 Toast.makeText(context, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
         })

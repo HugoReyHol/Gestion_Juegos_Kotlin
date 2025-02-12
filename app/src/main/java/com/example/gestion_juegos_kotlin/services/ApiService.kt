@@ -1,9 +1,11 @@
 package com.example.gestion_juegos_kotlin.services
 
+import com.example.gestion_juegos_kotlin.models.GameResponse
 import com.example.gestion_juegos_kotlin.models.User
 import com.example.gestion_juegos_kotlin.models.UserRequest
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiService {
@@ -12,4 +14,7 @@ interface ApiService {
 
     @POST("/user/insert")
     fun registerUser(@Body request: UserRequest): Call<User>
+
+    @GET("/")
+    fun getGames(): Call<List<GameResponse>>
 }
