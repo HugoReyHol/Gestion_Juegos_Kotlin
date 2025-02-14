@@ -31,6 +31,7 @@ class CollectionFragment : Fragment() {
 
     private fun inicializeRecycler() {
         binding.collectioRecycler.layoutManager = GridLayoutManager(context, 2)
+        TODO("Provider de games y userGames")
         val adapter = CollectionAdapter() {onClickOpenDetails(it)}
         binding.collectioRecycler.adapter = adapter
 
