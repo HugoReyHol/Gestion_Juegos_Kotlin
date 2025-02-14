@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.gestion_juegos_kotlin.adapters.CollectionAdapter
 import com.example.gestion_juegos_kotlin.databinding.FragmentCollectionBinding
 import com.example.gestion_juegos_kotlin.models.Game
+import com.example.gestion_juegos_kotlin.providers.GamesProvider
 import com.example.gestion_juegos_kotlin.services.GameService
 import kotlinx.coroutines.launch
 
@@ -37,14 +38,13 @@ class CollectionFragment : Fragment() {
         binding.collectioRecycler.layoutManager = GridLayoutManager(context, 3)
         adapter = CollectionAdapter(listOf()) {onClickOpenDetails(it)}
         binding.collectioRecycler.adapter = adapter
-        loadGames()
-
+        initializeProviders()
     }
 
-    private fun loadGames() {
+    private fun initializeProviders() {
         lifecycleScope.launch {
-            val newGames = GameService.getGames()
-            adapter.setNewGames(newGames)
+            GamesProvider.initialize()
+            adapter.setNewGames(GamesProvider.filteredGames)
         }
     }
 

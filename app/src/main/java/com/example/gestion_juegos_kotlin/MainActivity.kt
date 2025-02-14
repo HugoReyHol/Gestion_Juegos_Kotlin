@@ -31,15 +31,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        initializeProviders()
         initializeComponents()
-    }
-
-    private fun initializeProviders() {
-        lifecycleScope.launch {
-            GamesProvider.initialize()
-            UserGameProvider.initilize()
-        }
     }
 
     private fun initializeComponents() {

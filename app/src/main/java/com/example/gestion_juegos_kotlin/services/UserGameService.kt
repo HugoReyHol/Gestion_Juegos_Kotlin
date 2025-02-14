@@ -4,21 +4,22 @@ import android.util.Log
 import com.example.gestion_juegos_kotlin.models.UserGame
 import com.example.gestion_juegos_kotlin.models.UserGameInsert
 import com.example.gestion_juegos_kotlin.models.UserGameUpdate
-import com.example.gestion_juegos_kotlin.providers.UserGameProvider
 import com.example.gestion_juegos_kotlin.providers.UserProvider
 
 object UserGameService {
-    suspend fun getUserGames() {
+    suspend fun getUserGames(): List<UserGame>{
         val token = UserProvider.user!!.token
 
         val response = RetrofitClient.instance.getUserGames(token)
 
         if (response.isSuccessful) {
-            UserGameProvider.userGames = response.body()!!.map { UserGame.fromResponse(it) }
+            return response.body()!!.map { UserGame.fromResponse(it) }
 
         } else {
             Log.e("APIUserGames", "Error al obtener juegos de usuario")
         }
+
+        return listOf()
     }
 
     suspend fun insertUserGame(userGame: UserGame) {
