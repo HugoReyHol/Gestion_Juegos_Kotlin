@@ -11,4 +11,7 @@
     <string name="details">Detalles</string>
     <string name="releases">Lanzamientos</string>
     <string name="time_suf">h</string>
+    <string name="state">Estado:</string>
+    <string name="time">Tiempo jugado:</string>
+    <string name="score">Nota:</string>
 </resources>

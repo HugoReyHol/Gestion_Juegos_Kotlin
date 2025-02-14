@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginBottom="30dp"
-        android:text="Nota:"
+        android:text="@string/score"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/state_text"
         app:layout_constraintStart_toEndOf="@+id/game_cover" />
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:text="Estado:"
+        android:text="@string/state"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/game_cover"
         app:layout_constraintStart_toEndOf="@+id/game_cover"
@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="30dp"
-        android:text="Tiempo jugado:"
+        android:text="@string/time"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/game_cover"
         app:layout_constraintTop_toBottomOf="@+id/state_text" />
