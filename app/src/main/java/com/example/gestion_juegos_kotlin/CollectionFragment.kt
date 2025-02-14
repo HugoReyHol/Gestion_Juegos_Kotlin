@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.gestion_juegos_kotlin.databinding.FragmentCollectionBinding
 
 class CollectionFragment : Fragment() {
-    lateinit var binding: FragmentCollectionBinding
+    private lateinit var binding: FragmentCollectionBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +38,7 @@ class CollectionFragment : Fragment() {
     private fun onClickOpenDetails() {
         TODO("Hacer clase Details")
         startActivity(
-            Intent(context, Details::class.java)
+            Intent(context, DetailsActivity::class.java)
         )
     }
 }

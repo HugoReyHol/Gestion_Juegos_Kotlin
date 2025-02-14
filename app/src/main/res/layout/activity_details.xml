@@ -7,4 +7,96 @@
     android:layout_height="match_parent"
     tools:context=".DetailsActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/game_cover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/score_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="30dp"
+        android:text="Nota:"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/state_text"
+        app:layout_constraintStart_toEndOf="@+id/game_cover" />
+
+    <Spinner
+        android:id="@+id/score_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/score_text"
+        app:layout_constraintStart_toEndOf="@+id/score_text"
+        app:layout_constraintTop_toTopOf="@+id/score_text" />
+
+    <TextView
+        android:id="@+id/state_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="Estado:"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/game_cover"
+        app:layout_constraintStart_toEndOf="@+id/game_cover"
+        app:layout_constraintTop_toTopOf="@+id/game_cover" />
+
+    <Spinner
+        android:id="@+id/state_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/state_text"
+        app:layout_constraintStart_toEndOf="@+id/state_text"
+        app:layout_constraintTop_toTopOf="@+id/state_text" />
+
+    <TextView
+        android:id="@+id/time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:text="Tiempo jugado:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/game_cover"
+        app:layout_constraintTop_toBottomOf="@+id/state_text" />
+
+    <EditText
+        android:id="@+id/time_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:ems="4"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/time_text"
+        app:layout_constraintStart_toEndOf="@+id/time_text"
+        app:layout_constraintTop_toTopOf="@+id/time_text" />
+
+    <TextView
+        android:id="@+id/time_value_pref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="h"
+        app:layout_constraintBottom_toBottomOf="@+id/time_value"
+        app:layout_constraintStart_toEndOf="@+id/time_value"
+        app:layout_constraintTop_toTopOf="@+id/time_value" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
