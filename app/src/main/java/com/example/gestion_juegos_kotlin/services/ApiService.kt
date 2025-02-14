@@ -18,34 +18,34 @@ import retrofit2.http.Path
 interface ApiService {
     // Métodos de user
     @POST("/user/login")
-    fun loginUser(@Body request: UserRequest): Response<User>
+    suspend fun loginUser(@Body request: UserRequest): Response<User>
 
     @POST("/user/insert")
-    fun registerUser(@Body request: UserRequest): Response<User>
+    suspend fun registerUser(@Body request: UserRequest): Response<User>
 
     // Métodos de game
     @GET("/game")
     suspend fun getGames(): Response<List<GameResponse>>
 
-    // Métidos de usergame
+    // Métodos de usergame
     @GET("/user_game")
-    fun getUserGames(@Header("Authorization") token: String): Response<List<UserGameResponse>>
+    suspend fun getUserGames(@Header("Authorization") token: String): Response<List<UserGameResponse>>
 
     @POST("/user_game")
-    fun insertUserGame(
+    suspend fun insertUserGame(
         @Header("Authorization") token: String,
         @Body body: UserGameInsert
     ): Response<Void>
 
     @PATCH("/{idGame}")
-    fun updateUserGame(
+    suspend fun updateUserGame(
         @Path("idGame") idGame: Int,
         @Header("Authorization") token: String,
         @Body body: UserGameUpdate
     ): Response<Void>
 
     @DELETE("/{idGame}")
-    fun deleteUserGame(
+    suspend fun deleteUserGame(
         @Path("idGame") idGame: Int,
         @Header("Authorization") token: String,
     ): Response<Void>

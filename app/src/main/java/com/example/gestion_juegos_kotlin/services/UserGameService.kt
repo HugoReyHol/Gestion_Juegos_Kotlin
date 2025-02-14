@@ -3,100 +3,63 @@ package com.example.gestion_juegos_kotlin.services
 import android.util.Log
 import com.example.gestion_juegos_kotlin.models.UserGame
 import com.example.gestion_juegos_kotlin.models.UserGameInsert
-import com.example.gestion_juegos_kotlin.models.UserGameResponse
 import com.example.gestion_juegos_kotlin.models.UserGameUpdate
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.gestion_juegos_kotlin.providers.UserGameProvider
+import com.example.gestion_juegos_kotlin.providers.UserProvider
 
 object UserGameService {
-    private lateinit var _userGames: List<UserGame>
+    suspend fun getUserGames() {
+        val token = UserProvider.user!!.token
 
-    val userGames: List<UserGame>
-        get() {
-            if (!this::_userGames.isInitialized) {
-                getUserGames()
-            }
+        val response = RetrofitClient.instance.getUserGames(token)
 
-            return _userGames
+        if (response.isSuccessful) {
+            UserGameProvider.userGames = response.body()!!.map { UserGame.fromResponse(it) }
+
+        } else {
+            Log.e("APIUserGames", "Error al obtener juegos de usuario")
         }
+    }
 
-        private fun getUserGames() {
-            val token = UserService.user!!.token
-
-            RetrofitClient.instance.getUserGames(token).enqueue(object : Callback<List<UserGameResponse>> {
-                override fun onResponse(call: Call<List<UserGameResponse>>,response: Response<List<UserGameResponse>>) {
-                    if (response.isSuccessful) {
-                        _userGames = response.body()!!.map { UserGame.fromResponse(it) }
-
-                    } else {
-                        Log.e("APIUserGames", "Error al obtener juegos de usuario")
-                    }
-                }
-
-                override fun onFailure(call: Call<List<UserGameResponse>>, t: Throwable) {
-                    Log.e("APIUserGames", t.message.toString())
-                }
-            })
-        }
-
-    fun insertUserGame(userGame: UserGame) {
-        val token = UserService.user!!.token
+    suspend fun insertUserGame(userGame: UserGame) {
+        val token = UserProvider.user!!.token
         val body = UserGameInsert.fromUserGame(userGame)
 
-        RetrofitClient.instance.insertUserGame(token, body).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.isSuccessful) {
-                    // TODO actualizar interfaz
+        val response = RetrofitClient.instance.insertUserGame(token, body)
 
-                } else {
-                    Log.e("APIUserGames", "Error al insertar juego de usuario")
-                }
-            }
+        if (response.isSuccessful) {
+            // TODO actualizar interfaz
 
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Log.e("APIUserGames", t.message.toString())
-            }
-        })
+        } else {
+            Log.e("APIUserGames", "Error al insertar juego de usuario")
+        }
     }
 
-    fun updateUserGame(userGame: UserGame, update: UserGameUpdate) {
-        val token = UserService.user!!.token
+    suspend fun updateUserGame(userGame: UserGame, update: UserGameUpdate) {
+        val token = UserProvider.user!!.token
         val id = userGame.idGame
 
-        RetrofitClient.instance.updateUserGame(id, token, update).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.isSuccessful) {
-                    // TODO actualizar interfaz y userGame
+        val response = RetrofitClient.instance.updateUserGame(id, token, update)
 
-                } else {
-                    Log.e("APIUserGames", "Error al actualizar juego de usuario")
-                }
-            }
+        if (response.isSuccessful) {
+            // TODO actualizar interfaz y userGame
 
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Log.e("APIUserGames", t.message.toString())
-            }
-        })
+        } else {
+            Log.e("APIUserGames", "Error al actualizar juego de usuario")
+        }
     }
 
-    fun deleteUserGame(userGame: UserGame) {
-        val token = UserService.user!!.token
+    suspend fun deleteUserGame(userGame: UserGame) {
+        val token = UserProvider.user!!.token
         val id = userGame.idGame
 
-        RetrofitClient.instance.deleteUserGame(id, token).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.isSuccessful) {
-                    // TODO actualizar interfaz
+        val response = RetrofitClient.instance.deleteUserGame(id, token)
 
-                } else {
-                    Log.e("APIUserGames", "Error al borrar juego de usuario")
-                }
-            }
+        if (response.isSuccessful) {
+            // TODO actualizar interfaz
 
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Log.e("APIUserGames", t.message.toString())
-            }
-        })
+        } else {
+            Log.e("APIUserGames", "Error al borrar juego de usuario")
+        }
     }
 }

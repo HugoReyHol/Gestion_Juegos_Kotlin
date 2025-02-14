@@ -10,7 +10,7 @@ import com.example.gestion_juegos_kotlin.providers.UserProvider
 
 object UserService {
 
-    fun login(request: UserRequest, context: Context) {
+    suspend fun login(request: UserRequest, context: Context) {
         Log.i("LogIn", request.password)
 
         val response = RetrofitClient.instance.loginUser(request)
@@ -32,7 +32,7 @@ object UserService {
         }
     }
 
-    fun register(request: UserRequest, context: Context) {
+    suspend fun register(request: UserRequest, context: Context) {
         val response = RetrofitClient.instance.registerUser(request)
 
         if (response.code() == 400) {
