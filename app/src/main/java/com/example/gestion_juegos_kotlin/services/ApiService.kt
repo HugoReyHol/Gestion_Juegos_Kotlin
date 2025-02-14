@@ -6,7 +6,6 @@ import com.example.gestion_juegos_kotlin.models.UserGameInsert
 import com.example.gestion_juegos_kotlin.models.UserGameResponse
 import com.example.gestion_juegos_kotlin.models.UserGameUpdate
 import com.example.gestion_juegos_kotlin.models.UserRequest
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -19,10 +18,10 @@ import retrofit2.http.Path
 interface ApiService {
     // Métodos de user
     @POST("/user/login")
-    fun loginUser(@Body request: UserRequest): Call<User>
+    fun loginUser(@Body request: UserRequest): Response<User>
 
     @POST("/user/insert")
-    fun registerUser(@Body request: UserRequest): Call<User>
+    fun registerUser(@Body request: UserRequest): Response<User>
 
     // Métodos de game
     @GET("/game")
@@ -30,24 +29,24 @@ interface ApiService {
 
     // Métidos de usergame
     @GET("/user_game")
-    fun getUserGames(@Header("Authorization") token: String): Call<List<UserGameResponse>>
+    fun getUserGames(@Header("Authorization") token: String): Response<List<UserGameResponse>>
 
     @POST("/user_game")
     fun insertUserGame(
         @Header("Authorization") token: String,
         @Body body: UserGameInsert
-    ): Call<Void>
+    ): Response<Void>
 
     @PATCH("/{idGame}")
     fun updateUserGame(
         @Path("idGame") idGame: Int,
         @Header("Authorization") token: String,
         @Body body: UserGameUpdate
-    ): Call<Void>
+    ): Response<Void>
 
     @DELETE("/{idGame}")
     fun deleteUserGame(
         @Path("idGame") idGame: Int,
         @Header("Authorization") token: String,
-    ): Call<Void>
+    ): Response<Void>
 }
