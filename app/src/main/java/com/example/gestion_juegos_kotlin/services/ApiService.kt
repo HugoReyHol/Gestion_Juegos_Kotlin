@@ -7,6 +7,7 @@ import com.example.gestion_juegos_kotlin.models.UserGameResponse
 import com.example.gestion_juegos_kotlin.models.UserGameUpdate
 import com.example.gestion_juegos_kotlin.models.UserRequest
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -25,7 +26,7 @@ interface ApiService {
 
     // Métodos de game
     @GET("/game")
-    fun getGames(): Call<List<GameResponse>>
+    suspend fun getGames(): Response<List<GameResponse>>
 
     // Métidos de usergame
     @GET("/user_game")

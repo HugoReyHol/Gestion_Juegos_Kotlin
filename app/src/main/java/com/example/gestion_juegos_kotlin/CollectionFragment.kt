@@ -6,13 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.gestion_juegos_kotlin.adapters.CollectionAdapter
 import com.example.gestion_juegos_kotlin.databinding.FragmentCollectionBinding
 import com.example.gestion_juegos_kotlin.models.Game
+import com.example.gestion_juegos_kotlin.services.GameService
+import kotlinx.coroutines.launch
 
 class CollectionFragment : Fragment() {
     private lateinit var binding: FragmentCollectionBinding
+    private lateinit var adapter: CollectionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,11 +34,18 @@ class CollectionFragment : Fragment() {
     }
 
     private fun inicializeRecycler() {
-        binding.collectioRecycler.layoutManager = GridLayoutManager(context, 2)
-        TODO("Provider de games y userGames")
-        val adapter = CollectionAdapter() {onClickOpenDetails(it)}
+        binding.collectioRecycler.layoutManager = GridLayoutManager(context, 3)
+        adapter = CollectionAdapter(listOf()) {onClickOpenDetails(it)}
         binding.collectioRecycler.adapter = adapter
+        loadGames()
 
+    }
+
+    private fun loadGames() {
+        lifecycleScope.launch {
+            val newGames = GameService.getGames()
+            adapter.setNewGames(newGames)
+        }
     }
 
     private fun onClickOpenDetails(game: Game) {

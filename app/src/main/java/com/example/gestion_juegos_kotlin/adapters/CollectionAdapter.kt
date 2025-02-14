@@ -8,7 +8,7 @@ import com.example.gestion_juegos_kotlin.R
 import com.example.gestion_juegos_kotlin.databinding.CollectionElementBinding
 import com.example.gestion_juegos_kotlin.models.Game
 
-class CollectionAdapter(private val games: List<Game>, val onClickOpenDetails: (Game) -> Unit): RecyclerView.Adapter<CollectionAdapter.GameHolder>() {
+class CollectionAdapter(private var games: List<Game>, val onClickOpenDetails: (Game) -> Unit): RecyclerView.Adapter<CollectionAdapter.GameHolder>() {
     class GameHolder(val view: View): RecyclerView.ViewHolder(view) {
         private val binding = CollectionElementBinding.bind(view)
 
@@ -29,5 +29,10 @@ class CollectionAdapter(private val games: List<Game>, val onClickOpenDetails: (
         holder.view.setOnClickListener {
             onClickOpenDetails(games[position])
         }
+    }
+
+    fun setNewGames(newGames: List<Game>) {
+        games = newGames
+        notifyDataSetChanged()
     }
 }
