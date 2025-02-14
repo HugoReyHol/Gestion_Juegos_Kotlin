@@ -4,7 +4,7 @@ import com.example.gestion_juegos_kotlin.models.UserGame
 import com.example.gestion_juegos_kotlin.services.UserGameService
 import com.example.gestion_juegos_kotlin.models.UserGame.Companion.GameStates
 
-object UserGameProvider {
+object UserGamesProvider {
     private lateinit var _userGames: List<UserGame>
     private lateinit var _filteredUserGames: List<UserGame>
 
@@ -25,7 +25,7 @@ object UserGameProvider {
         }
     }
 
-    fun filterUserGames(state: GameStates?) {
+    fun filterUserGamesByState(state: GameStates?) {
         if (state == null) {
             _filteredUserGames = _userGames
             return

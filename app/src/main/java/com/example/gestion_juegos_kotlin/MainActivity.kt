@@ -10,12 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import com.example.gestion_juegos_kotlin.databinding.ActivityMainBinding
 import com.example.gestion_juegos_kotlin.models.UserGame
-import com.example.gestion_juegos_kotlin.providers.GamesProvider
-import com.example.gestion_juegos_kotlin.providers.UserGameProvider
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
