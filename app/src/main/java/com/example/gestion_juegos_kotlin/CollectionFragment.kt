@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.gestion_juegos_kotlin.adapters.CollectionAdapter
 import com.example.gestion_juegos_kotlin.databinding.FragmentCollectionBinding
+import com.example.gestion_juegos_kotlin.models.Game
 
 class CollectionFragment : Fragment() {
     private lateinit var binding: FragmentCollectionBinding
@@ -29,14 +31,13 @@ class CollectionFragment : Fragment() {
 
     private fun inicializeRecycler() {
         binding.collectioRecycler.layoutManager = GridLayoutManager(context, 2)
-        TODO("Añadir Adaptador de colección")
-        val adapter = CollectionAdapter() {onClickOpenDetails()}
+        val adapter = CollectionAdapter {onClickOpenDetails(it)}
         binding.collectioRecycler.adapter = adapter
 
     }
 
-    private fun onClickOpenDetails() {
-        TODO("Hacer clase Details")
+    private fun onClickOpenDetails(game: Game) {
+        TODO("Guardar game en provider")
         startActivity(
             Intent(context, DetailsActivity::class.java)
         )
