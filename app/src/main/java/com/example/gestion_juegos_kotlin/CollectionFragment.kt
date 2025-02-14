@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.gestion_juegos_kotlin.adapters.CollectionAdapter
 import com.example.gestion_juegos_kotlin.databinding.FragmentCollectionBinding
 import com.example.gestion_juegos_kotlin.models.Game
+import com.example.gestion_juegos_kotlin.providers.GamesProvider
 import com.example.gestion_juegos_kotlin.providers.HomeProvider
 import kotlinx.coroutines.launch
 
@@ -31,6 +32,7 @@ class CollectionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         inicializeRecycler()
+        // TODO inicializar spinner
     }
 
     private fun inicializeRecycler() {
@@ -48,7 +50,7 @@ class CollectionFragment : Fragment() {
     }
 
     private fun onClickOpenDetails(game: Game) {
-        TODO("Guardar game en provider")
+        GamesProvider.selectedGame = game
         startActivity(
             Intent(context, DetailsActivity::class.java)
         )

@@ -6,6 +6,7 @@ import com.example.gestion_juegos_kotlin.services.GameService
 object GamesProvider {
     private lateinit var _games: List<Game>
     private lateinit var _filteredGames: List<Game>
+    lateinit var selectedGame: Game
 
     val filteredGames: List<Game>
         get() {
