@@ -16,8 +16,11 @@ import com.example.gestion_juegos_kotlin.providers.HomeProvider
 import kotlinx.coroutines.launch
 
 class CollectionFragment : Fragment() {
+    companion object {
+        var adapter: CollectionAdapter? = null
+    }
+
     private lateinit var binding: FragmentCollectionBinding
-    private lateinit var adapter: CollectionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +48,7 @@ class CollectionFragment : Fragment() {
     private fun initializeProviders() {
         lifecycleScope.launch {
             HomeProvider.initialize()
-            adapter.setNewGames(HomeProvider.homeGames)
+            adapter?.setNewGames(HomeProvider.homeGames)
         }
     }
 

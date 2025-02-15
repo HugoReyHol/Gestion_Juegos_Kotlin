@@ -101,16 +101,16 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextChange(text: String?): Boolean {
                 // TODO probar esto
                 currentTitle = text
-                GamesProvider.filterGamesByTitle(currentTitle)
 
                 if (supportFragmentManager.findFragmentById(binding.fragmentContainerView.id) is CollectionFragment) {
-
+                    HomeProvider.filterHomeGames(currentTitle, currentState)
+                    CollectionFragment.adapter?.setNewGames(HomeProvider.homeGames)
                     Log.i("SearchBar", "Fragmento collection")
 
                 } else {
+                    GamesProvider.filterGamesByTitle(currentTitle)
                     SearchFragment.adapter?.setNewGames(GamesProvider.filteredGames)
                     Log.i("SearchBar", "Fragmento search")
-
                 }
 
                 return false
