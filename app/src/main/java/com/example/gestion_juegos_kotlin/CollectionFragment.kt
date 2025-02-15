@@ -32,6 +32,7 @@ class CollectionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         inicializeRecycler()
+        initializeProviders()
         // TODO inicializar spinner
     }
 
@@ -39,7 +40,6 @@ class CollectionFragment : Fragment() {
         binding.collectioRecycler.layoutManager = GridLayoutManager(context, 3)
         adapter = CollectionAdapter(listOf()) {onClickOpenDetails(it)}
         binding.collectioRecycler.adapter = adapter
-        initializeProviders()
     }
 
     private fun initializeProviders() {

@@ -17,8 +17,6 @@ import com.example.gestion_juegos_kotlin.databinding.ActivityMainBinding
 import com.example.gestion_juegos_kotlin.models.UserGame.Companion.GameStates
 import com.example.gestion_juegos_kotlin.providers.GamesProvider
 import com.example.gestion_juegos_kotlin.providers.HomeProvider
-import com.example.gestion_juegos_kotlin.providers.UserGamesProvider
-import com.example.gestion_juegos_kotlin.util.GamesFragment
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
