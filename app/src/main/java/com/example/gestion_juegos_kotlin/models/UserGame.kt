@@ -1,13 +1,15 @@
 package com.example.gestion_juegos_kotlin.models
 
 import java.time.Instant
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 data class UserGame(
     val idGame: Int,
     val idUser: Int,
-    var score: Int?,
-    var timePlayed: Int,
-    var gameState: GameStates,
+    var score: Int? = null,
+    var timePlayed: Int = 0,
+    var gameState: GameStates = GameStates.plan_to_play,
 ) {
     companion object {
         enum class GameStates(val string: String) {
@@ -46,7 +48,7 @@ data class UserGameInsert(
     var score: Int?,
     var timePlayed: Int,
     var gameState: String,
-    var lastChange: Instant = Instant.now()
+    var lastChange: String = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
 ) {
     companion object {
         fun fromUserGame(userGame: UserGame): UserGameInsert {

@@ -22,18 +22,22 @@ object UserGameService {
         return listOf()
     }
 
-    suspend fun insertUserGame(userGame: UserGame) {
+    suspend fun insertUserGame(userGame: UserGame): Boolean {
         val token = UserProvider.user!!.token
         val body = UserGameInsert.fromUserGame(userGame)
+
+        Log.i("APIUserGames", "$body")
 
         val response = RetrofitClient.instance.insertUserGame(token, body)
 
         if (response.isSuccessful) {
-            // TODO actualizar interfaz
+            return true
 
         } else {
             Log.e("APIUserGames", "Error al insertar juego de usuario")
         }
+
+        return false
     }
 
     suspend fun updateUserGame(userGame: UserGame, update: UserGameUpdate) {

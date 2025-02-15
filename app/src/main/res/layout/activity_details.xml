@@ -138,5 +138,15 @@
         app:layout_constraintStart_toEndOf="@+id/time_value"
         app:layout_constraintTop_toTopOf="@+id/time_value" />
 
+    <Button
+        android:id="@+id/add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="@string/add_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/game_cover"
+        app:layout_constraintStart_toEndOf="@+id/game_cover"
+        app:layout_constraintTop_toTopOf="@+id/game_cover" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

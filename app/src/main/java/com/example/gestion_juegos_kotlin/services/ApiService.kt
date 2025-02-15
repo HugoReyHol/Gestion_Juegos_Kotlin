@@ -11,6 +11,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -24,27 +25,27 @@ interface ApiService {
     suspend fun registerUser(@Body request: UserRequest): Response<User>
 
     // Métodos de game
-    @GET("/game")
+    @GET("/game/")
     suspend fun getGames(): Response<List<GameResponse>>
 
     // Métodos de usergame
-    @GET("/user_game")
+    @GET("/user_game/")
     suspend fun getUserGames(@Header("Authorization") token: String): Response<List<UserGameResponse>>
 
-    @POST("/user_game")
+    @POST("/user_game/")
     suspend fun insertUserGame(
         @Header("Authorization") token: String,
         @Body body: UserGameInsert
     ): Response<Void>
 
-    @PATCH("/{idGame}")
+    @PATCH("/user_game/{idGame}")
     suspend fun updateUserGame(
         @Path("idGame") idGame: Int,
         @Header("Authorization") token: String,
         @Body body: UserGameUpdate
     ): Response<Void>
 
-    @DELETE("/{idGame}")
+    @DELETE("/user_game/{idGame}")
     suspend fun deleteUserGame(
         @Path("idGame") idGame: Int,
         @Header("Authorization") token: String,

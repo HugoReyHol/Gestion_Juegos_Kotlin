@@ -14,4 +14,5 @@
     <string name="state">Estado:</string>
     <string name="time">Tiempo jugado:</string>
     <string name="score">Nota:</string>
+    <string name="add_btn">Añadir juego</string>
 </resources>
