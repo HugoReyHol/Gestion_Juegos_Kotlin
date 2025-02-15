@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                // TODO probar estados
                 lifecycleScope.launch {
                     HomeProvider.initialize()
                     currentState = GameStates.entries.getOrNull(position)
