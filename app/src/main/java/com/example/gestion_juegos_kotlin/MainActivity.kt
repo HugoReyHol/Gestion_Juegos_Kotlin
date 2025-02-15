@@ -15,6 +15,7 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.gestion_juegos_kotlin.databinding.ActivityMainBinding
 import com.example.gestion_juegos_kotlin.models.UserGame
+import com.example.gestion_juegos_kotlin.providers.GamesProvider
 import com.example.gestion_juegos_kotlin.util.GamesFragment
 
 class MainActivity : AppCompatActivity() {
@@ -71,14 +72,17 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                Log.i("SearchBar", "$p0")
-                // TODO implementar busqueda
                 return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                Log.i("SearchBar", "$p0")
-                // TODO implementar busqueda
+                // TODO probar esto
+                if (p0 != null) {
+                    GamesProvider.filterGamesByTitle(p0)
+                } else {
+                    GamesProvider.filterGamesByTitle()
+                }
+
                 return false
             }
 
