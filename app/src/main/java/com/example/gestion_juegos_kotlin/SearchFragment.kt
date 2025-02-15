@@ -15,9 +15,11 @@ import com.example.gestion_juegos_kotlin.providers.GamesProvider
 import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
-    private lateinit var binding: FragmentGamesBinding
-    private lateinit var adapter: SearchAdapter
+    companion object {
+        var adapter: SearchAdapter? = null
+    }
 
+    private lateinit var binding: FragmentGamesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +45,7 @@ class SearchFragment : Fragment() {
     private fun initializeProvider() {
         lifecycleScope.launch {
             GamesProvider.initialize()
-            adapter.setNewGames(GamesProvider.filteredGames)
+            adapter?.setNewGames(GamesProvider.filteredGames)
         }
     }
 

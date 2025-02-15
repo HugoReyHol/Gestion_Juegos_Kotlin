@@ -24,7 +24,7 @@ object HomeProvider {
         _homeGames = games.filter { g -> userGames.any { ug -> g.idGame == ug.idGame } }
     }
 
-    fun filterHomeGames(title: String = "", state: GameStates?) {
+    fun filterHomeGames(title: String?, state: GameStates?) {
         GamesProvider.filterGamesByTitle(title)
         UserGamesProvider.filterUserGamesByState(state)
 

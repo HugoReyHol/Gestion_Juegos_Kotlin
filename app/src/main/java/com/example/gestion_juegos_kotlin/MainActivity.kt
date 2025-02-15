@@ -1,6 +1,7 @@
 package com.example.gestion_juegos_kotlin
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -21,6 +22,9 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private var currentTitle: String? = null
+    private var currentState: GameStates? = null
+    private lateinit var currentMenu: Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +54,8 @@ class MainActivity : AppCompatActivity() {
                 // TODO probar estados
                 lifecycleScope.launch {
                     HomeProvider.initialize()
-                    HomeProvider.filterHomeGames(state = GameStates.entries.getOrNull(position))
+                    currentState = GameStates.entries.getOrNull(position)
+                    HomeProvider.filterHomeGames(currentTitle, currentState)
                 }
             }
 
@@ -66,12 +71,14 @@ class MainActivity : AppCompatActivity() {
                         replace(R.id.fragmentContainerView, CollectionFragment())
                     }
                     binding.spinner.visibility = View.VISIBLE
+                    reset()
                 }
                 R.id.game_nav -> {
                     supportFragmentManager.commit {
                         replace(R.id.fragmentContainerView, SearchFragment())
                     }
                     binding.spinner.visibility = View.INVISIBLE
+                    reset()
                 }
             }
 
@@ -81,6 +88,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_home, menu)
+        currentMenu = menu
 
         val searchItem: MenuItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
@@ -92,10 +100,17 @@ class MainActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(text: String?): Boolean {
                 // TODO probar esto
-                if (text != null) {
-                    GamesProvider.filterGamesByTitle(text)
+                currentTitle = text
+                GamesProvider.filterGamesByTitle(currentTitle)
+
+                if (supportFragmentManager.findFragmentById(binding.fragmentContainerView.id) is CollectionFragment) {
+
+                    Log.i("SearchBar", "Fragmento collection")
+
                 } else {
-                    GamesProvider.filterGamesByTitle()
+                    SearchFragment.adapter?.setNewGames(GamesProvider.filteredGames)
+                    Log.i("SearchBar", "Fragmento search")
+
                 }
 
                 return false
@@ -103,5 +118,12 @@ class MainActivity : AppCompatActivity() {
         })
 
         return true
+    }
+
+    private fun reset() {
+        currentTitle = null
+        currentState = null
+        val searchItem: MenuItem = currentMenu.findItem(R.id.action_search)
+        searchItem.collapseActionView()
     }
 }

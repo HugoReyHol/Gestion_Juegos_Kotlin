@@ -20,8 +20,8 @@ object GamesProvider {
         _filteredGames = _games
     }
 
-    fun filterGamesByTitle(title: String = "")  {
-        if (title == "") {
+    fun filterGamesByTitle(title: String?)  {
+        if (title == null || title == "") {
             _filteredGames = _games
             return
         }
