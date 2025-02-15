@@ -14,7 +14,7 @@ import com.example.gestion_juegos_kotlin.models.Game
 import com.example.gestion_juegos_kotlin.providers.GamesProvider
 import kotlinx.coroutines.launch
 
-class GamesFragment : Fragment() {
+class SearchFragment : Fragment() {
     private lateinit var binding: FragmentGamesBinding
     private lateinit var adapter: SearchAdapter
 

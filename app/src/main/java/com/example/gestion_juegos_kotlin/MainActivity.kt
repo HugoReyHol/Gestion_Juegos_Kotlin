@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.game_nav -> {
                     supportFragmentManager.commit {
-                        replace(R.id.fragmentContainerView, GamesFragment())
+                        replace(R.id.fragmentContainerView, SearchFragment())
                     }
                     binding.spinner.visibility = View.INVISIBLE
                 }
