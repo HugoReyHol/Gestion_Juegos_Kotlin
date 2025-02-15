@@ -50,17 +50,19 @@ object UserGameService {
         }
     }
 
-    suspend fun deleteUserGame(userGame: UserGame) {
+    suspend fun deleteUserGame(userGame: UserGame): Boolean {
         val token = UserProvider.user!!.token
         val id = userGame.idGame
 
         val response = RetrofitClient.instance.deleteUserGame(id, token)
 
         if (response.isSuccessful) {
-            // TODO actualizar interfaz
+            return  true
 
         } else {
             Log.e("APIUserGames", "Error al borrar juego de usuario")
         }
+
+        return false
     }
 }
