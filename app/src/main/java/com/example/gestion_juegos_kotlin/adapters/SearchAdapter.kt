@@ -1,5 +1,9 @@
 package com.example.gestion_juegos_kotlin.adapters
 
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +17,19 @@ class SearchAdapter(private var games: List<Game>, val onClickOpenDetails: (Game
         private val binding = SearchElementBinding.bind(view)
 
         fun render(game: Game) {
-            // TODO asiganar valores
             binding.gameImg.setImageBitmap(game.image)
             binding.titleTxt.text = game.title
+
+            val detailsSections = game.details.split("\n")
+
+            val spanDev = SpannableString("Dev: ${detailsSections[2].substring(10)}")
+            val spanPub = SpannableString("Pub: ${detailsSections[3].substring(10)}")
+
+            spanDev.setSpan(StyleSpan(Typeface.BOLD), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spanPub.setSpan(StyleSpan(Typeface.BOLD), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            binding.devTxt.text = spanDev
+            binding.pubTxt.text = spanPub
         }
     }
 
