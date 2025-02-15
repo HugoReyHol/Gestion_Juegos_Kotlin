@@ -1,10 +1,10 @@
 package com.example.gestion_juegos_kotlin
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +12,14 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
+import androidx.lifecycle.lifecycleScope
 import com.example.gestion_juegos_kotlin.databinding.ActivityMainBinding
-import com.example.gestion_juegos_kotlin.models.UserGame
+import com.example.gestion_juegos_kotlin.models.UserGame.Companion.GameStates
 import com.example.gestion_juegos_kotlin.providers.GamesProvider
+import com.example.gestion_juegos_kotlin.providers.HomeProvider
+import com.example.gestion_juegos_kotlin.providers.UserGamesProvider
 import com.example.gestion_juegos_kotlin.util.GamesFragment
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -39,10 +42,24 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = ""
 
-        val options = UserGame.Companion.GameStates.entries.map { it.string } as MutableList
+        val options = GameStates.entries.map { it.string } as MutableList
         options.add("TODOS")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
         binding.spinner.adapter = adapter
+
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                // TODO probar estados
+                lifecycleScope.launch {
+                    HomeProvider.initialize()
+                    HomeProvider.filterHomeGames(state = GameStates.entries.getOrNull(position))
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
 
         binding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
@@ -71,23 +88,21 @@ class MainActivity : AppCompatActivity() {
         val searchView = searchItem.actionView as SearchView
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
+            override fun onQueryTextSubmit(text: String?): Boolean {
                 return false
             }
 
-            override fun onQueryTextChange(p0: String?): Boolean {
+            override fun onQueryTextChange(text: String?): Boolean {
                 // TODO probar esto
-                if (p0 != null) {
-                    GamesProvider.filterGamesByTitle(p0)
+                if (text != null) {
+                    GamesProvider.filterGamesByTitle(text)
                 } else {
                     GamesProvider.filterGamesByTitle()
                 }
 
                 return false
             }
-
         })
-
 
         return true
     }
