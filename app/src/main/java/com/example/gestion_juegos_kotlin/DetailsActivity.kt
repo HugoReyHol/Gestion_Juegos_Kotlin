@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -36,16 +37,14 @@ class DetailsActivity : AppCompatActivity() {
         userGame = UserGamesProvider.userGames.firstOrNull { ug -> ug.idGame == game.idGame }
 
         initializeComponents()
+        updateUI()
     }
 
     private fun initializeComponents() {
         binding.gameCover.setImageBitmap(game.image)
 
-        if (userGame == null) {
-            // TODO Mostrar botón añadir
-
-        } else {
-            // TODO Mostrar formulario
+        if (userGame != null) {
+            // TODO cargar valores de userGame
 
         }
 
@@ -76,16 +75,12 @@ class DetailsActivity : AppCompatActivity() {
         // TODO acabar esto
         if (userGame == null) {
             supportActionBar?.dispatchMenuVisibilityChanged(false)
+            binding.gameForm.visibility = View.INVISIBLE
 
         } else {
-            supportActionBar?.dispatchMenuVisibilityChanged(false)
+            supportActionBar?.dispatchMenuVisibilityChanged(true)
+            binding.gameForm.visibility = View.VISIBLE
 
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (userGame != null) menuInflater.inflate(R.menu.menu_details, menu)
-
-        return super.onCreateOptionsMenu(menu)
     }
 }
