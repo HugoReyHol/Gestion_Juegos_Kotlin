@@ -21,8 +21,8 @@ object UserGamesProvider {
     suspend fun initialize() {
         if (!this::_userGames.isInitialized) {
             _userGames = UserGameService.getUserGames()
-            _filteredUserGames = _userGames.filter { ug -> ug.gameState == GameStates.playing }
         }
+        _filteredUserGames = _userGames.filter { ug -> ug.gameState == GameStates.playing }
     }
 
     fun filterUserGamesByState(state: GameStates?) {

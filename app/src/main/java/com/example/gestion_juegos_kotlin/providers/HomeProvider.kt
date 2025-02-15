@@ -16,11 +16,12 @@ object HomeProvider {
             GamesProvider.initialize()
             UserGamesProvider.initialize()
 
-            val games = GamesProvider.filteredGames
-            val userGames = UserGamesProvider.filteredUserGames
-
-            _homeGames = games.filter { g -> userGames.any { ug -> g.idGame == ug.idGame } }
         }
+
+        val games = GamesProvider.filteredGames
+        val userGames = UserGamesProvider.filteredUserGames
+
+        _homeGames = games.filter { g -> userGames.any { ug -> g.idGame == ug.idGame } }
     }
 
     fun filterHomeGames(title: String = "", state: GameStates?) {

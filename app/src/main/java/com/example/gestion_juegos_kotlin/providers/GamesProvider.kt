@@ -16,8 +16,8 @@ object GamesProvider {
     suspend fun initialize() {
         if (!this::_games.isInitialized) {
             _games = GameService.getGames()
-            _filteredGames = _games
         }
+        _filteredGames = _games
     }
 
     fun filterGamesByTitle(title: String = "")  {
