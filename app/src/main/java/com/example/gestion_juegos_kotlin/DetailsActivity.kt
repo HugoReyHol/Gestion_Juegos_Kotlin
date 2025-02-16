@@ -12,10 +12,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
+import com.example.gestion_juegos_kotlin.adapters.ViewPagerAdapter
 import com.example.gestion_juegos_kotlin.databinding.ActivityDetailsBinding
 import com.example.gestion_juegos_kotlin.models.Game
 import com.example.gestion_juegos_kotlin.models.UserGame
@@ -26,6 +28,7 @@ import com.example.gestion_juegos_kotlin.providers.HomeProvider
 import com.example.gestion_juegos_kotlin.providers.UserGamesProvider
 import com.example.gestion_juegos_kotlin.providers.UserProvider
 import com.example.gestion_juegos_kotlin.services.UserGameService
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
 
 class DetailsActivity : AppCompatActivity() {
@@ -152,7 +155,16 @@ class DetailsActivity : AppCompatActivity() {
             }
         })
 
+        binding.tabView.adapter = ViewPagerAdapter(this)
+        TabLayoutMediator(binding.tabLayout, binding.tabView) { tab, position ->
+            tab.text = when (position) {
+                0 -> ContextCompat.getString(this, R.string.description)
+                1 -> ContextCompat.getString(this, R.string.details)
+                2 -> ContextCompat.getString(this, R.string.releases)
+                else -> "else"
+            }
 
+        }.attach()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
