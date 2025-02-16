@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 lifecycleScope.launch {
-                    HomeProvider.initialize()
                     currentState = GameStates.entries.getOrNull(position)
                     HomeProvider.filterHomeGames(currentTitle, currentState)
                     CollectionFragment.adapter?.setNewGames(HomeProvider.homeGames)

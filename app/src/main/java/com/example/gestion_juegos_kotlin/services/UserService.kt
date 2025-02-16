@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.gestion_juegos_kotlin.MainActivity
 import com.example.gestion_juegos_kotlin.models.UserRequest
+import com.example.gestion_juegos_kotlin.providers.HomeProvider
 import com.example.gestion_juegos_kotlin.providers.UserProvider
 
 object UserService {
@@ -25,6 +26,7 @@ object UserService {
 
         else if (response.isSuccessful) {
             UserProvider.user = response.body()!!
+            HomeProvider.initialize()
 
             context.startActivity(
                 Intent(context, MainActivity::class.java)
@@ -41,6 +43,7 @@ object UserService {
 
         else if (response.isSuccessful) {
             UserProvider.user = response.body()!!
+            HomeProvider.initialize()
 
             context.startActivity(
                 Intent(context, MainActivity::class.java)
