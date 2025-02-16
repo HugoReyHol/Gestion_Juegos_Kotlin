@@ -36,7 +36,6 @@ class CollectionFragment : Fragment() {
 
         inicializeRecycler()
         initializeProviders()
-        // TODO inicializar spinner
     }
 
     private fun inicializeRecycler() {
