@@ -72,10 +72,8 @@ class DetailsActivity : AppCompatActivity() {
             }
         }
 
-        // TODO configurar form
         binding.stateValue.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, stateOptions)
 
-        // TODO arreglar que llame a update al abrir la ventana
         binding.stateValue.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val state = GameStates.entries[position]
@@ -161,8 +159,6 @@ class DetailsActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> onBackPressedDispatcher.onBackPressed()
             R.id.delete_btn -> {
-                // TODO Añadir confirmación
-
                 lifecycleScope.launch {
                     if (UserGameService.deleteUserGame(userGame!!)) {
                         UserGamesProvider.deleteUserGame(userGame!!)
