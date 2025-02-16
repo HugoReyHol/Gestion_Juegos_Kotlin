@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                     HomeProvider.initialize()
                     currentState = GameStates.entries.getOrNull(position)
                     HomeProvider.filterHomeGames(currentTitle, currentState)
+                    CollectionFragment.adapter?.setNewGames(HomeProvider.homeGames)
                 }
             }
 
@@ -98,7 +99,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(text: String?): Boolean {
-                // TODO probar esto
                 currentTitle = text
 
                 if (supportFragmentManager.findFragmentById(binding.fragmentContainerView.id) is CollectionFragment) {
