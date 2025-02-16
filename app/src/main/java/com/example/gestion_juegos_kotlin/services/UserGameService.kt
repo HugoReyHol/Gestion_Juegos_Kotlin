@@ -5,6 +5,7 @@ import com.example.gestion_juegos_kotlin.models.UserGame
 import com.example.gestion_juegos_kotlin.models.UserGameInsert
 import com.example.gestion_juegos_kotlin.models.UserGameUpdate
 import com.example.gestion_juegos_kotlin.providers.UserProvider
+import java.security.KeyStore.TrustedCertificateEntry
 
 object UserGameService {
     suspend fun getUserGames(): List<UserGame>{
@@ -40,18 +41,20 @@ object UserGameService {
         return false
     }
 
-    suspend fun updateUserGame(userGame: UserGame, update: UserGameUpdate) {
+    suspend fun updateUserGame(userGame: UserGame, update: UserGameUpdate): Boolean {
         val token = UserProvider.user!!.token
         val id = userGame.idGame
 
         val response = RetrofitClient.instance.updateUserGame(id, token, update)
 
         if (response.isSuccessful) {
-            // TODO actualizar interfaz y userGame
+            return true
 
         } else {
             Log.e("APIUserGames", "Error al actualizar juego de usuario")
         }
+
+        return false
     }
 
     suspend fun deleteUserGame(userGame: UserGame): Boolean {
