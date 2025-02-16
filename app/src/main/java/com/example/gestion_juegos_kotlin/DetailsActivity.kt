@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +16,10 @@ import androidx.lifecycle.lifecycleScope
 import com.example.gestion_juegos_kotlin.databinding.ActivityDetailsBinding
 import com.example.gestion_juegos_kotlin.models.Game
 import com.example.gestion_juegos_kotlin.models.UserGame
+import com.example.gestion_juegos_kotlin.models.UserGame.Companion.GameStates
+import com.example.gestion_juegos_kotlin.models.UserGameUpdate
 import com.example.gestion_juegos_kotlin.providers.GamesProvider
+import com.example.gestion_juegos_kotlin.providers.HomeProvider
 import com.example.gestion_juegos_kotlin.providers.UserGamesProvider
 import com.example.gestion_juegos_kotlin.providers.UserProvider
 import com.example.gestion_juegos_kotlin.services.UserGameService
@@ -24,6 +29,8 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
     private var game: Game = GamesProvider.selectedGame
     private var userGame: UserGame? = null
+    private var initialized: Boolean = false
+    private val stateOptions = GameStates.entries.map { it.string }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +47,7 @@ class DetailsActivity : AppCompatActivity() {
 
         initializeComponents()
         updateUI()
+        initialized = true
     }
 
     private fun initializeComponents() {
@@ -63,6 +71,30 @@ class DetailsActivity : AppCompatActivity() {
         }
 
         // TODO configurar form
+        binding.stateValue.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, stateOptions)
+
+        // TODO arreglar que llame a update al abrir la ventana
+        binding.stateValue.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (userGame != null && initialized) {
+                     val state = GameStates.entries[position]
+
+                    lifecycleScope.launch {
+                        if (UserGameService.updateUserGame(userGame!!, UserGameUpdate(gameState = GameStates.entries[position].name))) {
+                            userGame!!.gameState = state
+                            HomeProvider.deleteUserGameFromFilter(userGame!!)
+
+                        } else {
+                            Toast.makeText(applicationContext, "Error al actualizar el juego", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -111,6 +143,7 @@ class DetailsActivity : AppCompatActivity() {
             binding.addBtn.visibility = View.INVISIBLE
 
             // TODO cargar los valores del userGame en el form
+            binding.stateValue.setSelection(stateOptions.indexOf(userGame!!.gameState.string))
         }
     }
 }
