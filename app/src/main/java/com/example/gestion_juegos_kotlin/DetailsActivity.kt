@@ -45,11 +45,6 @@ class DetailsActivity : AppCompatActivity() {
     private fun initializeComponents() {
         binding.gameCover.setImageBitmap(game.image)
 
-        if (userGame != null) {
-            // TODO cargar valores de userGame
-
-        }
-
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = game.title
@@ -66,6 +61,8 @@ class DetailsActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // TODO configurar form
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -76,7 +73,6 @@ class DetailsActivity : AppCompatActivity() {
 
                 lifecycleScope.launch {
                     if (UserGameService.deleteUserGame(userGame!!)) {
-                        // TODO borrar de lista
                         UserGamesProvider.deleteUserGame(userGame!!)
                         userGame = null
                         updateUI()
@@ -114,6 +110,7 @@ class DetailsActivity : AppCompatActivity() {
             binding.gameForm.visibility = View.VISIBLE
             binding.addBtn.visibility = View.INVISIBLE
 
+            // TODO cargar los valores del userGame en el form
         }
     }
 }
