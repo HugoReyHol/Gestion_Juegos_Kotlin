@@ -29,8 +29,8 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
     private var game: Game = GamesProvider.selectedGame
     private var userGame: UserGame? = null
-    private var initialized: Boolean = false
     private val stateOptions = GameStates.entries.map { it.string }
+    private val scoreOptions = listOf("10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0", "Sin seleccionar")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +47,6 @@ class DetailsActivity : AppCompatActivity() {
 
         initializeComponents()
         updateUI()
-        initialized = true
     }
 
     private fun initializeComponents() {
@@ -76,16 +75,46 @@ class DetailsActivity : AppCompatActivity() {
         // TODO arreglar que llame a update al abrir la ventana
         binding.stateValue.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (userGame != null && initialized) {
-                     val state = GameStates.entries[position]
+                val state = GameStates.entries[position]
+
+                if (userGame != null && userGame?.gameState != state) {
+                    val update = UserGameUpdate.fromUserGame(userGame!!)
+                    update.gameState = GameStates.entries[position].name
 
                     lifecycleScope.launch {
-                        if (UserGameService.updateUserGame(userGame!!, UserGameUpdate(gameState = GameStates.entries[position].name))) {
+                        if (UserGameService.updateUserGame(userGame!!, update)) {
                             userGame!!.gameState = state
+                            // TODO arreglar al añadir al state filtrado
                             HomeProvider.deleteUserGameFromFilter(userGame!!)
 
                         } else {
-                            Toast.makeText(applicationContext, "Error al actualizar el juego", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, "Error al actualizar estado del juego", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        binding.scoreValue.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, scoreOptions)
+
+        binding.scoreValue.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val score = if (10 - position != -1) 10 - position else null
+
+                if (userGame != null && userGame?.score != score) {
+                    val update = UserGameUpdate.fromUserGame(userGame!!)
+                    update.score = score
+
+                    lifecycleScope.launch {
+                        if (UserGameService.updateUserGame(userGame!!, update)) {
+                            userGame!!.score = score
+
+                        } else {
+                            Toast.makeText(applicationContext, "Error al actualizar nota del juego", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -144,6 +173,7 @@ class DetailsActivity : AppCompatActivity() {
 
             // TODO cargar los valores del userGame en el form
             binding.stateValue.setSelection(stateOptions.indexOf(userGame!!.gameState.string))
+            binding.scoreValue.setSelection(if (userGame!!.score != null) 10 - userGame!!.score!! else 11 )
         }
     }
 }

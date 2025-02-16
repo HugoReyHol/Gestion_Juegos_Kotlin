@@ -59,8 +59,18 @@ data class UserGameInsert(
 }
 
 data class UserGameUpdate(
-    var score: Int? = null,
-    var timePlayed: Int? = null,
-    var gameState: String? = null,
+    var score: Int?,
+    var timePlayed: Int,
+    var gameState: String,
     var lastChange: Long = System.currentTimeMillis()
-)
+) {
+    companion object {
+        fun fromUserGame(userGame: UserGame): UserGameUpdate {
+            return UserGameUpdate(
+                score = userGame.score,
+                timePlayed = userGame.timePlayed,
+                gameState = userGame.gameState.name
+            )
+        }
+    }
+}
