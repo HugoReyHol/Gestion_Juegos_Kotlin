@@ -43,10 +43,14 @@ object HomeProvider {
             CollectionFragment.adapter?.notifyItemInserted(_homeGames.lastIndex)
 
         } else {
-            val index = _homeGames.indexOf(GamesProvider.selectedGame)
-            _homeGames.removeAt(index)
-            CollectionFragment.adapter?.notifyItemRemoved(index)
+            deleteSelectedGame()
 
         }
+    }
+
+    fun deleteSelectedGame() {
+        val index = _homeGames.indexOf(GamesProvider.selectedGame)
+        _homeGames.removeAt(index)
+        CollectionFragment.adapter?.notifyItemRemoved(index)
     }
 }

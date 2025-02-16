@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.example.gestion_juegos_kotlin.adapters.ViewPagerAdapter
 import com.example.gestion_juegos_kotlin.databinding.ActivityDetailsBinding
@@ -174,6 +173,7 @@ class DetailsActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     if (UserGameService.deleteUserGame(userGame!!)) {
                         UserGamesProvider.deleteUserGame(userGame!!)
+                        HomeProvider.deleteSelectedGame()
                         userGame = null
                         updateUI()
 
