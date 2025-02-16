@@ -58,7 +58,7 @@ class DetailsActivity : AppCompatActivity() {
             userGame = UserGame(game.idGame, UserProvider.user!!.idUser)
             lifecycleScope.launch {
                 if (UserGameService.insertUserGame(userGame!!)) {
-                    UserGamesProvider.userGames
+                    UserGamesProvider.addUserGame(userGame!!)
                     updateUI()
                 } else {
                     userGame = null

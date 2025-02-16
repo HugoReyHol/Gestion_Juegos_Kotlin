@@ -41,10 +41,10 @@ data class UserGameResponse(
 
 data class UserGameInsert(
     val idGame: Int,
-    var score: Int?,
-    var timePlayed: Int,
-    var gameState: String,
-    var lastChange: Long = System.currentTimeMillis()
+    val score: Int?,
+    val timePlayed: Int,
+    val gameState: String,
+    val lastChange: Long = System.currentTimeMillis()
 ) {
     companion object {
         fun fromUserGame(userGame: UserGame): UserGameInsert {
