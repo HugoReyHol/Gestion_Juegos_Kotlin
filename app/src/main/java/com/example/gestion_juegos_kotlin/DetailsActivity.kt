@@ -2,6 +2,8 @@ package com.example.gestion_juegos_kotlin
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.example.gestion_juegos_kotlin.databinding.ActivityDetailsBinding
 import com.example.gestion_juegos_kotlin.models.Game
@@ -124,6 +127,35 @@ class DetailsActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         }
+
+        binding.timeValue.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var time = text?.toString()?.toIntOrNull()
+                if (time == null) time = 0
+
+                if (userGame != null && time != userGame?.timePlayed) {
+                    val update = UserGameUpdate.fromUserGame(userGame!!)
+                    update.timePlayed = time
+
+                    lifecycleScope.launch {
+                        if (UserGameService.updateUserGame(userGame!!, update)) {
+                            userGame!!.timePlayed = time
+
+                        } else {
+                            Toast.makeText(applicationContext, "Error al actualizar tiempo del juego", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -160,7 +192,6 @@ class DetailsActivity : AppCompatActivity() {
 
     @SuppressLint("RestrictedApi")
     private fun updateUI() {
-        // TODO acabar esto
         if (userGame == null) {
             invalidateOptionsMenu()
             binding.gameForm.visibility = View.INVISIBLE
@@ -171,9 +202,9 @@ class DetailsActivity : AppCompatActivity() {
             binding.gameForm.visibility = View.VISIBLE
             binding.addBtn.visibility = View.INVISIBLE
 
-            // TODO cargar los valores del userGame en el form
             binding.stateValue.setSelection(stateOptions.indexOf(userGame!!.gameState.string))
             binding.scoreValue.setSelection(if (userGame!!.score != null) 10 - userGame!!.score!! else 11 )
+            binding.timeValue.setText("${userGame!!.timePlayed}")
         }
     }
 }
