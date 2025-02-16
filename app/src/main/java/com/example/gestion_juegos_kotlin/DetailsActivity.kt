@@ -87,8 +87,7 @@ class DetailsActivity : AppCompatActivity() {
                     lifecycleScope.launch {
                         if (UserGameService.updateUserGame(userGame!!, update)) {
                             userGame!!.gameState = state
-                            // TODO arreglar al añadir al state filtrado
-                            HomeProvider.deleteUserGameFromFilter(userGame!!)
+                            HomeProvider.onUserGameStateChanged(userGame!!)
 
                         } else {
                             Toast.makeText(applicationContext, "Error al actualizar estado del juego", Toast.LENGTH_SHORT).show()

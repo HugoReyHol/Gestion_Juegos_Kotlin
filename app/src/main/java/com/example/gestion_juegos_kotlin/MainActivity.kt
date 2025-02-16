@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var currentTitle: String? = null
-    private var currentState: GameStates? = null
     private lateinit var currentMenu: Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,8 +51,8 @@ class MainActivity : AppCompatActivity() {
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 lifecycleScope.launch {
-                    currentState = GameStates.entries.getOrNull(position)
-                    HomeProvider.filterHomeGames(currentTitle, currentState)
+                    HomeProvider.currentState = GameStates.entries.getOrNull(position)
+                    HomeProvider.filterHomeGames(currentTitle)
                     CollectionFragment.adapter?.setNewGames(HomeProvider.homeGames)
                 }
             }
@@ -101,7 +100,7 @@ class MainActivity : AppCompatActivity() {
                 currentTitle = text
 
                 if (supportFragmentManager.findFragmentById(binding.fragmentContainerView.id) is CollectionFragment) {
-                    HomeProvider.filterHomeGames(currentTitle, currentState)
+                    HomeProvider.filterHomeGames(currentTitle)
                     CollectionFragment.adapter?.setNewGames(HomeProvider.homeGames)
                     Log.i("SearchBar", "Fragmento collection")
 
@@ -120,7 +119,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun reset() {
         currentTitle = null
-        currentState = null
+        HomeProvider.currentState = null
         val searchItem: MenuItem = currentMenu.findItem(R.id.action_search)
         searchItem.collapseActionView()
     }

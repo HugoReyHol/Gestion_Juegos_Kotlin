@@ -7,6 +7,7 @@ import com.example.gestion_juegos_kotlin.models.UserGame.Companion.GameStates
 
 object HomeProvider {
     private lateinit var _homeGames: ArrayList<Game>
+    var currentState: GameStates? = GameStates.playing
 
     val homeGames: List<Game>
         get() {
@@ -26,9 +27,9 @@ object HomeProvider {
         _homeGames = games.filter { g -> userGames.any { ug -> g.idGame == ug.idGame } } as ArrayList<Game>
     }
 
-    fun filterHomeGames(title: String?, state: GameStates?) {
+    fun filterHomeGames(title: String?) {
         GamesProvider.filterGamesByTitle(title)
-        UserGamesProvider.filterUserGamesByState(state)
+        UserGamesProvider.filterUserGamesByState(currentState)
 
         val games = GamesProvider.filteredGames
         val userGames = UserGamesProvider.filteredUserGames
@@ -36,12 +37,16 @@ object HomeProvider {
         _homeGames = games.filter { g -> userGames.any { ug -> g.idGame == ug.idGame } } as ArrayList<Game>
     }
 
-    fun deleteUserGameFromFilter(userGame: UserGame) {
-        val index = _homeGames.indexOfFirst { g -> g.idGame == userGame.idGame }
+    fun onUserGameStateChanged(userGame: UserGame) {
+        if (currentState == userGame.gameState) {
+            _homeGames.add(GamesProvider.selectedGame)
+            CollectionFragment.adapter?.notifyItemInserted(_homeGames.lastIndex)
 
-        if (index == -1) return
+        } else {
+            val index = _homeGames.indexOf(GamesProvider.selectedGame)
+            _homeGames.removeAt(index)
+            CollectionFragment.adapter?.notifyItemRemoved(index)
 
-        _homeGames.removeAt(index)
-        CollectionFragment.adapter?.notifyItemRemoved(index)
+        }
     }
 }
