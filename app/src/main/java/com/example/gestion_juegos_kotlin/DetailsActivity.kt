@@ -91,18 +91,28 @@ class DetailsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_details, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.findItem(R.id.delete_btn)?.isVisible = userGame != null
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     @SuppressLint("RestrictedApi")
     private fun updateUI() {
         // TODO acabar esto
         if (userGame == null) {
-            supportActionBar?.dispatchMenuVisibilityChanged(false)
+            invalidateOptionsMenu()
             binding.gameForm.visibility = View.INVISIBLE
             binding.addBtn.visibility = View.VISIBLE
 
         } else {
-            supportActionBar?.dispatchMenuVisibilityChanged(true)
-            binding.addBtn.visibility = View.VISIBLE
-            binding.gameForm.visibility = View.INVISIBLE
+            invalidateOptionsMenu()
+            binding.gameForm.visibility = View.VISIBLE
+            binding.addBtn.visibility = View.INVISIBLE
 
         }
     }
