@@ -49,6 +49,7 @@ object HomeProvider {
     }
 
     fun deleteSelectedGame() {
+        if (currentState == null) return
         val index = _homeGames.indexOf(GamesProvider.selectedGame)
         _homeGames.removeAt(index)
         CollectionFragment.adapter?.notifyItemRemoved(index)
